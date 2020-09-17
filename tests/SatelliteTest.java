@@ -13,33 +13,33 @@ class SatelliteTest{
     @Test
     void initialized(){
         assertNotNull(satellite);
-        assertNotNull(Satellite.getRequestSpots());
-        assertNotNull(Satellite.getCriticalPhotos());
+        assertNotNull(satellite.getRequestSpots());
+        assertNotNull(satellite.getCriticalPhotos());
     }
     @Test
     void emptyQueuesOnCreation(){
-        assertTrue(Satellite.getRequestSpots().isEmpty());
-        assertTrue(Satellite.getCriticalPhotos().isEmpty());
+        assertTrue(satellite.getRequestSpots().isEmpty());
+        assertTrue(satellite.getCriticalPhotos().isEmpty());
     }
     @Test
     void photoShootingMechanism(){
         Coordinates c = new Coordinates(0,0);
-        Satellite.getRequestSpots().offer(c);
+        satellite.getRequestSpots().offer(c);
 
-        assertEquals(1, Satellite.getRequestSpots().size());
-        assertEquals(0, Satellite.getCriticalPhotos().size());
+        assertEquals(1, satellite.getRequestSpots().size());
+        assertEquals(0, satellite.getCriticalPhotos().size());
 
         satellite.start();
         try {
             sleep(1000);
 
-            assertEquals(0, Satellite.getRequestSpots().size());
-            assertEquals(1, Satellite.getCriticalPhotos().size());
+            assertEquals(0, satellite.getRequestSpots().size());
+            assertEquals(1, satellite.getCriticalPhotos().size());
 
-            Satellite.getCriticalPhotos().take();
+            satellite.getCriticalPhotos().take();
 
-            assertEquals(0, Satellite.getRequestSpots().size());
-            assertEquals(0, Satellite.getCriticalPhotos().size());
+            assertEquals(0, satellite.getRequestSpots().size());
+            assertEquals(0, satellite.getCriticalPhotos().size());
 
         }catch (InterruptedException e){}
     }

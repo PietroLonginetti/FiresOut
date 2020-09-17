@@ -2,23 +2,24 @@ import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class Satellite extends Thread{
-    private static ArrayBlockingQueue<Coordinates> requestSpots;
-    private static ArrayBlockingQueue<SatellitePhoto> criticalPhotos;
+    private ArrayBlockingQueue<Coordinates> requestSpots;
+    private ArrayBlockingQueue<SatellitePhoto> criticalPhotos;
     private static Satellite instance = null;
-    private Satellite() {}
+    private Satellite() {
+        requestSpots = new ArrayBlockingQueue<Coordinates>(1);
+        criticalPhotos = new ArrayBlockingQueue<SatellitePhoto>(1);
+    }
 
-    public static Satellite getInstance(){
+    public static synchronized Satellite getInstance(){
         if(instance == null) {
             instance = new Satellite();
-            requestSpots = new ArrayBlockingQueue<Coordinates>(1);
-            criticalPhotos = new ArrayBlockingQueue<SatellitePhoto>(1);
         }
         return instance;
     }
-    public static ArrayBlockingQueue<Coordinates> getRequestSpots() {
+    public ArrayBlockingQueue<Coordinates> getRequestSpots() {
         return requestSpots;
     }
-    public static ArrayBlockingQueue<SatellitePhoto> getCriticalPhotos() {
+    public ArrayBlockingQueue<SatellitePhoto> getCriticalPhotos() {
         return criticalPhotos;
     }
 

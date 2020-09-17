@@ -59,9 +59,9 @@ public class FireControlUnit extends Observable implements Observer {
             satellite = Satellite.getInstance();
             satellite.start();
         }
-        Satellite.getRequestSpots().offer(c);
+        satellite.getRequestSpots().offer(c);
         //il metodo take() aspetta che ci sia almeno un elemento nella coda di foto scattate dal satellite
-        return Satellite.getCriticalPhotos().take();
+        return satellite.getCriticalPhotos().take();
     }
 
     @Override
