@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class LocalAntenna extends Observable {
     final Coordinates coordinates;
-    final static int criticalThreshold = 80;  //degrees
+    final static int criticalThreshold = 50;  //degrees
     private int sectorTemperature;  //degrees
     private int increment;      //degrees
 
@@ -33,5 +33,6 @@ public class LocalAntenna extends Observable {
         setChanged();
         notifyObservers();
     }
+    public boolean extinguishing;
 }
 

@@ -16,7 +16,7 @@ class ResponseStrategyTest {
         a.setSectorTemperature(81);
         rs.respondEmergency(a);
 
-        assertTrue(a.getSectorTemperature() < LocalAntenna.criticalThreshold);
+        assertTrue(a.extinguishing);
     }
     @Test
     void canadairEmergencyResponse(){
@@ -24,7 +24,7 @@ class ResponseStrategyTest {
         a.setSectorTemperature(81);
         rs.respondEmergency(a);
 
-        assertTrue(a.getSectorTemperature() < LocalAntenna.criticalThreshold);
+        assertTrue(a.extinguishing);
     }
     @Test
     void evacuateAndSendtruckEmergencyResponse(){
@@ -32,7 +32,7 @@ class ResponseStrategyTest {
         a.setSectorTemperature(81);
         rs.respondEmergency(a);
 
-        assertTrue(a.getSectorTemperature() < LocalAntenna.criticalThreshold);
+        assertTrue(a.extinguishing);
     }
 
 }

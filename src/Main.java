@@ -36,14 +36,17 @@ public class Main {
                 Random r = new Random();
                 for (int j = 0; j < antennasGrid.length; j++) {
                     LocalAntenna current = antennasGrid[i][j];
-                    int dice = r.nextInt(100);
-
-                    if (dice != 0) {
-                        //Simulazione  di piccole e normali variazioni di temperatura
-                        current.setSectorTemperature(current.getSectorTemperature() + (r.nextInt() % 3));
-                    } else /*dice == 0 */ {
-                        //Simulazione  di un aumento di temperatura corrispondente ad un incendio
-                        current.setSectorTemperature(current.getSectorTemperature() + 50 + r.nextInt(100));
+                    if(!current.extinguishing) {
+                        int dice = r.nextInt(50);
+                        if (dice != 0) {
+                            //Simulazione  di piccole e normali variazioni di temperatura
+                            current.setSectorTemperature(current.getSectorTemperature() + (r.nextInt() % 3));
+                        } else /*dice == 0 */ {
+                            //Simulazione  di un aumento di temperatura corrispondente ad un incendio
+                            current.setSectorTemperature(current.getSectorTemperature() + r.nextInt(100));
+                        }
+                    } else {
+                        current.setSectorTemperature(current.getSectorTemperature() - r.nextInt(20));
                     }
                 }
             }

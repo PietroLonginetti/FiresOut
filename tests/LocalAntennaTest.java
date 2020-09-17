@@ -17,7 +17,7 @@ class LocalAntennaTest {
     }
     @Test
     void getCriticalThreshold(){
-        assertEquals(80, LocalAntenna.criticalThreshold);
+        assertEquals(50, LocalAntenna.criticalThreshold);
     }
     @Test
     void hasChangedValuesOnCreation(){

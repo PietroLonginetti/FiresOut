@@ -37,12 +37,14 @@ public class FireControlUnit extends Observable implements Observer {
     }
 
     private void checkFires(){
+        ArrayList<LocalAntenna> toManage = new ArrayList<>();
         for (LocalAntenna a:criticalSectors) {
             System.out.println("Incendio rilevato nel settore " + a.coordinates.x + a.coordinates.y);
+            if(!a.extinguishing)
+                toManage.add(a);
         }
         if(!criticalSectors.isEmpty()) {
-            setChanged();
-            notifyObservers(new ArrayList<>(criticalSectors));  //Copia difensiva
+            notifyObservers(new ArrayList<>(toManage));  //Copia difensiva
         }
     }
     public SatellitePhoto takePhotoAt(Coordinates c) throws InterruptedException {
@@ -70,16 +72,24 @@ public class FireControlUnit extends Observable implements Observer {
         //Arg è nullo -> Pull Observer
         LocalAntenna s = (LocalAntenna) o;
         if (s.getSectorTemperature() > LocalAntenna.criticalThreshold) {
-            criticalSectors.add(s);
+            boolean found = false;
+            for (LocalAntenna a:criticalSectors) {
+                if(a.equals(s)) {
+                    found = true;
+                    break;
+                }
+            }
+            if(!found) {
+                criticalSectors.add(s);
+                setChanged();
+            }
         }
 
         //Gestione dello spegnimento di un incendio
-        if (s.getSectorTemperature() - s.getIncrement() > LocalAntenna.criticalThreshold) {
-            System.out.println("Incendio domato nel settore " + s.coordinates.x + s.coordinates.y + "\n");
-            criticalSectors.remove(s);
-            if (criticalSectors.isEmpty()) {
-                System.out.println("Tutti gli incendi domati. Attuale situazione: ");
-                printGrid();
+        if(s.extinguishing){
+            if(s.getSectorTemperature() < LocalAntenna.criticalThreshold){
+                criticalSectors.remove(s);
+                s.extinguishing = false;
             }
         }
 

@@ -2,8 +2,8 @@ import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class Satellite extends Thread{
-    private ArrayBlockingQueue<Coordinates> requestSpots;
-    private ArrayBlockingQueue<SatellitePhoto> criticalPhotos;
+    private final ArrayBlockingQueue<Coordinates> requestSpots;
+    private final ArrayBlockingQueue<SatellitePhoto> criticalPhotos;
     private static Satellite instance = null;
     private Satellite() {
         requestSpots = new ArrayBlockingQueue<Coordinates>(1);
@@ -41,3 +41,4 @@ public class Satellite extends Thread{
         }
     }
 }
+

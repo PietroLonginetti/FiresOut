@@ -60,7 +60,7 @@ class FireControlUnitTest {
     void hasTakenPhotoAtLegalPosition() throws InterruptedException{
         Random r = new Random();
         Coordinates c = new Coordinates(r.nextInt(fcu.getSectors().length),r.nextInt(fcu.getSectors().length));
-        fcu.getSectors()[c.x][c.y].setSectorTemperature(81);
+        fcu.getSectors()[c.x][c.y].setSectorTemperature(51);
         SatellitePhoto sp = fcu.takePhotoAt(c);
         assertNotNull(sp);
         assertNotNull(sp.description);
